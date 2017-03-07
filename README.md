@@ -1,5 +1,5 @@
 # Micro Giphy Translate
-A micro-service that returns a random GIF depending on the search term using Giphy's Translate API.
+A micro-service that returns a random GIF depending on the search term using [Giphy's Translate API](https://github.com/Giphy/GiphyAPI#translate-endpoint).
 
 Visit [https://gif.now.sh/](https://gif.now.sh/)
 
