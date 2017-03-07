@@ -1,0 +1,28 @@
+{
+  "name": "micro-giphy-translate",
+  "version": "0.0.1",
+  "description": "A microservice for Giphy's Translate API",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro",
+    "dev": "nodemon --exec 'micro .'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jxom/micro-giphy-translate.git"
+  },
+  "author": "Jake Moxey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jxom/micro-giphy-translate/issues"
+  },
+  "homepage": "https://github.com/jxom/micro-giphy-translate#readme",
+  "dependencies": {
+    "fs-promise": "^2.0.0",
+    "lodash": "^4.17.4",
+    "micro": "^7.0.6",
+    "micro-api": "^0.1.1",
+    "request": "^2.80.0",
+    "request-promise": "^4.1.1"
+  }
+}
