@@ -34,11 +34,14 @@ const handleSearchGiphyUsingTranslate = async ({ params: { query }, res }) => {
 
 const handleRequestGiphyImage = async ({ params: { imageId }, res }) => {
   // Request the image!
-  const gif = await request({ uri: giphyGifByIdUrl(imageId), json: true });
-
-  // Prepare the browser for an awesome GIF!
-  res.setHeader('Content-Type', 'image/gif');
-  return gif;
+  try {
+    const gif = await request({ uri: giphyGifByIdUrl(imageId), json: true });
+    // Prepare the browser for an awesome GIF!
+    res.setHeader('Content-Type', 'image/gif');
+    return gif;
+  } catch (e) {
+    return 'Something went wrong. (╯°□°）╯︵ ┻━┻';
+  }
 }
 
 const api = microApi([
