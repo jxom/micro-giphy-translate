@@ -1,5 +1,6 @@
 const { send } = require('micro');
 const microApi = require('micro-api');
+const microCORS = require('micro-cors')();
 const fs = require('fs-promise')
 const request = require('request-promise').defaults({ encoding: null });
 const getVal = require('lodash/get');
@@ -62,4 +63,4 @@ const api = microApi([
   }
 ]);
 
-module.exports = api;
+module.exports = microCORS(api);

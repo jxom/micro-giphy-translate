@@ -22,6 +22,7 @@
     "lodash": "^4.17.4",
     "micro": "^7.0.6",
     "micro-api": "^0.1.1",
+    "micro-cors": "0.0.4",
     "request": "^2.80.0",
     "request-promise": "^4.1.1"
   }
