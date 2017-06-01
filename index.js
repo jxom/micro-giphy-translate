@@ -15,6 +15,8 @@ const handleNoSearchQuery = () => {
 
 const handleSearchGiphyUsingTranslate = async ({ params: { query }, res }) => {
   try {
+    query = query.replace(/.gif$/, '');
+
     // Lets search for the image with the query that's given...
     const resp = await request({ uri: GIPHY_TRANSLATE_API_URL, qs: { api_key: API_KEY, s: query }, json: true });
 
@@ -26,7 +28,7 @@ const handleSearchGiphyUsingTranslate = async ({ params: { query }, res }) => {
 
     // If it does exist, then redirect the client (appending the image id to the path
     // as we want to persist the image when the URL is shared to others).
-    res.setHeader('Location', `/${query}/${imageId}`);
+    res.setHeader('Location', `/${query}/${imageId}.gif`);
     return send(res, 301, {});
   } catch (e) {
     return e;
@@ -36,6 +38,8 @@ const handleSearchGiphyUsingTranslate = async ({ params: { query }, res }) => {
 const handleRequestGiphyImage = async ({ params: { imageId }, res }) => {
   // Request the image!
   try {
+    imageId = imageId.replace(/.gif$/, '');
+
     const gif = await request({ uri: giphyGifByIdUrl(imageId), json: true });
     // Prepare the browser for an awesome GIF!
     res.setHeader('Content-Type', 'image/gif');
