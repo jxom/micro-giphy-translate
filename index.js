@@ -29,7 +29,7 @@ const handleSearchGiphyUsingTranslate = async ({ params: { query }, res }) => {
     // If it does exist, then redirect the client (appending the image id to the path
     // as we want to persist the image when the URL is shared to others).
     res.setHeader('Location', `/${query}/${imageId}.gif`);
-    return send(res, 301, {});
+    return send(res, 302, {});
   } catch (e) {
     return e;
   }
