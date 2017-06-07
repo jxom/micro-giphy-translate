@@ -1,5 +1,5 @@
 const { send } = require('micro');
-const microApi = require('micro-api');
+const { router, get } = require('microrouter');
 const microCORS = require('micro-cors')();
 const fs = require('fs-promise')
 const request = require('request-promise').defaults({ encoding: null });
@@ -13,10 +13,8 @@ const handleNoSearchQuery = () => {
   return 'Search for a gif by entering your search term in the URL!\n\nE.g. https://gif.now.sh/Batman and robin';
 }
 
-const handleSearchGiphyUsingTranslate = async ({ params: { query }, res }) => {
+const handleSearchGiphyUsingTranslate = async ({ params: { query } }, res) => {
   try {
-    query = query.replace(/.gif$/, '');
-
     // Lets search for the image with the query that's given...
     const resp = await request({ uri: GIPHY_TRANSLATE_API_URL, qs: { api_key: API_KEY, s: query }, json: true });
 
@@ -35,11 +33,9 @@ const handleSearchGiphyUsingTranslate = async ({ params: { query }, res }) => {
   }
 }
 
-const handleRequestGiphyImage = async ({ params: { imageId }, res }) => {
+const handleRequestGiphyImage = async ({ params: { imageId } }, res) => {
   // Request the image!
   try {
-    imageId = imageId.replace(/.gif$/, '');
-
     const gif = await request({ uri: giphyGifByIdUrl(imageId), json: true });
     // Prepare the browser for an awesome GIF!
     res.setHeader('Content-Type', 'image/gif');
@@ -49,22 +45,10 @@ const handleRequestGiphyImage = async ({ params: { imageId }, res }) => {
   }
 }
 
-const api = microApi([
-  {
-    method: 'get',
-    path: '/',
-    handler: handleNoSearchQuery,
-  },
-  {
-    method: 'get',
-    path: '/:query',
-    handler: handleSearchGiphyUsingTranslate,
-  },
-  {
-    method: 'get',
-    path: '/:query/:imageId',
-    handler: handleRequestGiphyImage,
-  }
-]);
+const api = router(
+  get('/:query(.gif)(/)', handleSearchGiphyUsingTranslate),
+  get('/:query/:imageId(.gif)(/)', handleRequestGiphyImage),
+  get('/*', handleNoSearchQuery)
+);
 
 module.exports = microCORS(api);
